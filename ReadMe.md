@@ -1,7 +1,7 @@
 # Barzin
 
 The name of application is Barzin. The meaning of Barzin is elevating and rising.
-Barzin is a special ToDo App to help user accomolish tasks gracefully.
+Barzin is a special ToDo App to help user accomplish tasks gracefully.
 
 ## Goal
 
