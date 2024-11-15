@@ -17,7 +17,7 @@
     
     })
 */
-
+/* Initial version with Node.js
 import http from "http";
 import fs from "fs";
 
@@ -46,4 +46,22 @@ const server = http.createServer((req, res) => {
 
 server.listen(4321, () => {
     console.log("Now listening!")
+})
+*/
+
+// Express version
+import express from "express";
+import path from "path";
+
+const app = express();
+const port = 4321;
+
+app.use(express.static('public'));  
+
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`)
 })

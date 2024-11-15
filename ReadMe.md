@@ -33,3 +33,13 @@ It started with vanilla Javascript and can be evolved through (meta)frameworks.
     - Obsoleted
     - Completed
 - The life cycle of TDI shall be finished in either Obsoleted or Completed status.
+
+## How to run the project
+
+clone the repository
+
+```bash
+node --watch server.js
+```
+
+`--watch` flag is used to restart the server automatically when the file is changed.
