@@ -6,7 +6,7 @@ Barzin is a special ToDo App to help users accomplish tasks gracefully.
 ## Goal
 
 This project is defined to practice the development of a full-stack web app.
-It started with vanilla Javascript and can be evolved through (meta)frameworks.
+The Express.js is used as the backend framework for this project.
 
 ## Roadmap
 
