@@ -1,6 +1,7 @@
 import express from "express";
 import taskRouter from "./route/taskRoutes.js";
 import userRouter from "./route/userRoutes.js";
+import cors from 'cors';
 
 const app = express();
 const port = 4321;
@@ -13,6 +14,7 @@ const port = 4321;
         "pass": "lkajsdflkj"
     }
 */
+app.use(cors()); // Enable CORS
 app.use(express.static('public'));
 app.use(express.json()) // automatically parse incoming json on the body
 app.use(taskRouter);
