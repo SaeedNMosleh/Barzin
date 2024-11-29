@@ -8,6 +8,8 @@ Barzin is a special ToDo App to help users accomplish tasks gracefully.
 This project is defined to practice the development of a full-stack web app.
 The Express.js is used as the backend framework for this project.
 
+The main goal of this project is to practice Express.js and main focus is on bakcend development.
+
 ## Roadmap
 
 ## Requirements

@@ -2,6 +2,7 @@ import { Router } from "express";
 import fs from "fs";
 import { hashSync, compareSync } from "bcrypt";
 import jwt from "jsonwebtoken";
+import { check , validationResult } from "express-validator";
 
 /*
     when signing up
@@ -34,9 +35,16 @@ userRouter.get('/api/user/all', (req,res) => {
 });
 
 // POST /api/user           -> create a new user
-userRouter.post('/api/user',(req,res)=> {
+userRouter.post('/api/user',check("userName").isEmail().notEmpty()
+                           ,check("pass").isLength({min: 3, max:8}),
+    (req,res) => {
     //TODO : Add validator.js  -> https://github.com/validatorjs/validator.js
-    // Alternative : express-validator : a middleware wraps validators offered by validator.js
+    // alternative ->  express-validator : a middleware wraps validators offered by validator.js
+    const errors = validationResult(req);
+    if(!errors.isEmpty()){
+        return res.status(400).json({errors: errors.array()});
+    }
+
     const hashCode = hashSync(req.body.pass, 6);
     const newUser = {
         userName: req.body.userName,
