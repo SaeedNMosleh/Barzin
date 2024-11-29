@@ -24,6 +24,7 @@ import jwt from "jsonwebtoken";
 */
 
 const userRouter = Router();
+const secretCode = "123123123";
 
 
 // GET /api/user/all        -> all the users
@@ -34,18 +35,45 @@ userRouter.get('/api/user/all', (req,res) => {
 
 // POST /api/user           -> create a new user
 userRouter.post('/api/user',(req,res)=> {
+    //TODO : Add validator.js  -> https://github.com/validatorjs/validator.js
+    // Alternative : express-validator : a middleware wraps validators offered by validator.js
     const hashCode = hashSync(req.body.pass, 6);
     const newUser = {
         userName: req.body.userName,
         pass: hashCode 
     }
-    const token = jwt.sign(newUser,"123123123",{expiresIn: "2w"});
+    const token = jwt.sign(newUser, secretCode ,{expiresIn: "2w"});
     
     const users = readUsers()
     users.push(newUser)
     saveUsers(users)
 
     res.send(token)
+});
+
+//POST /api/user/login -> login user
+// If token expires , DB should be clean-up to remove correspondent user names
+userRouter.post('/api/user/login',(req, res)=>{
+    
+    const decoded = jwt.verify(req.body.token , secretCode, (err, decoded)=>{
+        return res.status(401).send("Invalid Token");
+    });
+    const user = readUsers().find(user => user.userName === decoded.userName);
+    if(!user){
+        return res.status(401).send("User not found");
+    }
+    const hashCode = user.pass;
+    //const userCheck = compareSync(decoded.pass,hashCode); 
+    // It compares hashcode with initial string 
+    //We can save the pass in user creation to be used here for reference but then generating hashcode doesn't make sense
+     
+    if(decoded.pass === hashCode){
+        return res.send("logged in");
+    }
+    else{
+        return res.status(401).send("Invalid token");
+    }
+
 });
 
 
@@ -60,5 +88,6 @@ function saveUsers(users){
     const usersObjects = JSON.stringify(users);
     fs.writeFileSync("./users.json",usersObjects);
 }
+
 
 export default userRouter
